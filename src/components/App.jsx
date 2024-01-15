@@ -1,16 +1,16 @@
+import React from 'react';
+
+import { PhoneInputForm, ContactsList, Filter } from 'components';
+import { Section, Header, Title } from './Section/Section.styled';
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <Section>
+      <Header>Phonebook</Header>
+      <PhoneInputForm />
+      <Title>Contacts</Title>
+      <Filter />
+      <ContactsList />
+    </Section>
   );
 };
