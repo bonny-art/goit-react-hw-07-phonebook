@@ -1,7 +1,26 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
+import * as contactsAPI from '../../services/';
+
+export const setContactsAction = () => {
+  return async dispatch => {
+    try {
+      dispatch(contactsSlice.actions.fetchContactsStart());
+      const data = await contactsAPI.getAllContacts();
+      console.log('data :>> ', data);
+      dispatch(contactsSlice.actions.fetchContactsSuccess(data));
+    } catch (error) {
+      dispatch(contactsSlice.actions.fetchContactsError(error));
+    }
+  };
+};
+
 const initialState = {
-  contacts: [],
+  contacts: {
+    items: [],
+    isLoading: false,
+    error: '',
+  },
 };
 
 const contactsSlice = createSlice({
@@ -17,18 +36,39 @@ const contactsSlice = createSlice({
         return { payload: newTodo };
       },
       reducer: (state, { payload }) => {
-        state.contacts.unshift(payload);
+        state.contacts.items.unshift(payload);
       },
     },
+
     deleteContactAction: (state, { payload }) => {
-      state.contacts = state.contacts.filter(c => c.id !== payload);
+      state.contacts.items = state.contacts.items.filter(c => c.id !== payload);
     },
-    setContactsAction: (state, { payload }) => {
-      state.contacts = payload;
+    // setContactsAction: (state, { payload }) => {
+    //   state.contacts.contacts = payload;
+    // },
+
+    fetchContactsStart: state => {
+      state.contacts.isLoading = true;
+      state.contacts.error = '';
+    },
+
+    fetchContactsSuccess: (state, { payload }) => {
+      state.contacts.contacts.isLoading = false;
+      state.contacts.items = payload;
+    },
+
+    fetchContactsError: (state, { payload }) => {
+      state.contacts.isLoading = false;
+      state.contacts.error = payload;
     },
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
-export const { addContactAction, deleteContactAction, setContactsAction } =
-  contactsSlice.actions;
+export const {
+  addContactAction,
+  deleteContactAction,
+  fetchContactsStart,
+  fetchContactsSuccess,
+  fetchContactsError,
+} = contactsSlice.actions;

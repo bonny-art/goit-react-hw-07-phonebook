@@ -10,8 +10,9 @@ import {
   ErrorMessageStyled,
 } from './PhoneInputForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContactAction } from 'store';
+
 import { Notify } from 'notiflix';
+import { addContactAction } from 'store';
 
 const INITIAL_STATE = {
   name: '',
@@ -35,7 +36,7 @@ const schema = yup.object().shape({
 });
 
 export const PhoneInputForm = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts.contacts.items);
 
   const dispatch = useDispatch();
 
