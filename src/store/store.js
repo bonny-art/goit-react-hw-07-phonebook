@@ -13,6 +13,7 @@ const customMiddleware = store => {
         action(store.dispatch);
         return;
       }
+      return next(action);
     };
   };
 };

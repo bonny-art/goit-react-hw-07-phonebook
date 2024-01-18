@@ -4,8 +4,7 @@ import { ContactsListItem } from 'components';
 
 import { ContactsListContainer } from './ContactsList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-// import { contactsOperations } from 'store/contacts';
-import { setContactsAction } from 'store';
+import { contactsOperations } from 'store/contacts';
 
 export const ContactsList = () => {
   const state = useSelector(state => state.contacts);
@@ -15,7 +14,7 @@ export const ContactsList = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(setContactsAction()));
+  useEffect(() => dispatch(contactsOperations.setContactsAction()), [dispatch]);
 
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter)
@@ -23,13 +22,13 @@ export const ContactsList = () => {
 
   return (
     <ContactsListContainer>
-      {visibleContacts.map(({ id, name, number }) => {
+      {visibleContacts.map(({ id, name, phone }) => {
         return (
           <ContactsListItem
             key={id}
             id={id}
             name={name}
-            number={number}
+            number={phone}
           ></ContactsListItem>
         );
       })}
