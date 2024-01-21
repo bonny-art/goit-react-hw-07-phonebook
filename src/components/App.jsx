@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PhoneInputForm, ContactsList, Filter } from 'components';
+import { PhoneInputForm, Filter, Contacts } from 'components';
 import { Section, Header, Title } from './Section/Section.styled';
 
 export const App = () => {
@@ -10,7 +10,7 @@ export const App = () => {
       <PhoneInputForm />
       <Title>Contacts</Title>
       <Filter />
-      <ContactsList />
+      <Contacts />
     </Section>
   );
 };
