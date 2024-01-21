@@ -23,3 +23,14 @@ export const setContactThunk = createAsyncThunk(
     }
   }
 );
+
+export const deleteContactThunk = createAsyncThunk(
+  'contacts/deleteContact',
+  async (id, { rejectWithValue }) => {
+    try {
+      return await contactsAPI.deleteContact(id);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

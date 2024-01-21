@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getContactsThunk, setContactThunk } from './contactsThunks';
+import {
+  deleteContactThunk,
+  getContactsThunk,
+  setContactThunk,
+} from './contactsThunks';
 
 const initialState = {
   contacts: {
@@ -25,10 +29,9 @@ const contactsSlice = createSlice({
     //     state.contacts.items.unshift(payload);
     //   },
     // },
-
-    deleteContactAction: (state, { payload }) => {
-      state.contacts.items = state.contacts.items.filter(c => c.id !== payload);
-    },
+    // deleteContactAction: (state, { payload }) => {
+    //   state.contacts.items = state.contacts.items.filter(c => c.id !== payload);
+    // },
   },
   extraReducers: builder => {
     builder
@@ -53,6 +56,20 @@ const contactsSlice = createSlice({
         state.contacts.items.push(payload);
       })
       .addCase(setContactThunk.rejected, (state, { payload }) => {
+        state.contacts.isLoading = false;
+        state.contacts.error = payload;
+      })
+      .addCase(deleteContactThunk.pending, state => {
+        state.contacts.isLoading = true;
+        state.contacts.error = '';
+      })
+      .addCase(deleteContactThunk.fulfilled, (state, { payload }) => {
+        state.contacts.isLoading = false;
+        state.contacts.items = state.contacts.items.filter(
+          c => c.id !== payload.id
+        );
+      })
+      .addCase(deleteContactThunk.rejected, (state, { payload }) => {
         state.contacts.isLoading = false;
         state.contacts.error = payload;
       });

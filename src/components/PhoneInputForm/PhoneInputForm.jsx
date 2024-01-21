@@ -50,7 +50,6 @@ export const PhoneInputForm = () => {
     }
 
     dispatch(setContactThunk(data));
-    console.log('data :>> ', data);
   };
 
   const handleSubmit = (values, { resetForm }) => {

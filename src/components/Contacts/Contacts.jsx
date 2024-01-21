@@ -12,9 +12,9 @@ export const Contacts = () => {
     state => state.contacts.contacts
   );
 
-  console.log('items :>> ', items);
-  console.log('isLoading :>> ', isLoading);
-  console.log('error :>> ', error);
+  //   console.log('items :>> ', items);
+  //   console.log('isLoading :>> ', isLoading);
+  //   console.log('error :>> ', error);
 
   const dispatch = useDispatch();
 

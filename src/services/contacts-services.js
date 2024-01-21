@@ -22,3 +22,9 @@ export const postContact = async contact => {
 
   return data;
 };
+
+export const deleteContact = async id => {
+  const { data } = await axios.delete(`${CONTACTS_ENDPOINT}/${id}`);
+
+  return data;
+};
