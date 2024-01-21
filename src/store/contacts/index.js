@@ -1,1 +1,1 @@
-export * as contactsOperations from './contactsOperations';
+export * as contactsOperations from './contactsThunks';

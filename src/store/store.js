@@ -6,19 +6,19 @@ const reducer = {
   contacts: contactsReducer,
 };
 
-// const customMiddleware = store => {
-//   return next => {
-//     return action => {
-//       if (typeof action === 'function') {
-//         action(store.dispatch);
-//         return;
-//       }
-//       return next(action);
-//     };
-//   };
-// };
+const customMiddleware = store => {
+  return next => {
+    return action => {
+      if (typeof action === 'function') {
+        action(store.dispatch);
+        return;
+      }
+      return next(action);
+    };
+  };
+};
 
 export const store = configureStore({
   reducer,
-  // middleware: () => [customMiddleware],
+  middleware: () => [customMiddleware],
 });

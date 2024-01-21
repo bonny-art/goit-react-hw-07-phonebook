@@ -8,3 +8,17 @@ export const getAllContacts = async () => {
 
   return data;
 };
+
+export const postContact = async contact => {
+  const { data } = await axios.post(
+    CONTACTS_ENDPOINT,
+    JSON.stringify(contact),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  return data;
+};

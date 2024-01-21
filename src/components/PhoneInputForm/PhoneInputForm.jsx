@@ -12,16 +12,17 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Notify } from 'notiflix';
-import { addContactAction } from 'store';
+
+import { setContactThunk } from 'store/contacts/contactsThunks';
 
 const INITIAL_STATE = {
   name: '',
-  number: '',
+  phone: '',
 };
 
 const namePattern =
   "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
-const numberPattern =
+const phonePattern =
   /^\+?\d{1,4}[ .-]?\(?\d{1,3}?\)?[ .-]?\d{1,4}[ .-]?\d{1,4}[ .-]?\d{1,9}$/;
 
 const schema = yup.object().shape({
@@ -29,9 +30,9 @@ const schema = yup.object().shape({
     .string()
     .matches(namePattern, 'Name must contain only letters')
     .required('Name is required'),
-  number: yup
+  phone: yup
     .string()
-    .matches(numberPattern, 'Write a valid phone number')
+    .matches(phonePattern, 'Write a valid phone number')
     .required('Phone number is required'),
 });
 
@@ -48,7 +49,8 @@ export const PhoneInputForm = () => {
       return;
     }
 
-    dispatch(addContactAction(data));
+    dispatch(setContactThunk(data));
+    console.log('data :>> ', data);
   };
 
   const handleSubmit = (values, { resetForm }) => {
@@ -77,11 +79,11 @@ export const PhoneInputForm = () => {
           Number:
           <FormInput
             type="tel"
-            name="number"
+            name="phone"
             required
             placeholder="Enter contact's phone number"
           />
-          <ErrorMessage name="number" component={ErrorMessageStyled} />
+          <ErrorMessage name="phone" component={ErrorMessageStyled} />
         </FormField>
         <FormButton type="submit">Add</FormButton>
       </InputFormContainer>
