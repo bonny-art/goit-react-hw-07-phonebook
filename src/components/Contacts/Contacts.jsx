@@ -18,7 +18,9 @@ export const Contacts = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(contactsOperations.getContactsThunk()), [dispatch]);
+  useEffect(() => {
+    dispatch(contactsOperations.getContactsThunk());
+  }, [dispatch]);
 
   const visibleContacts = items
     .filter(contact => contact.name.toLowerCase().includes(filter))

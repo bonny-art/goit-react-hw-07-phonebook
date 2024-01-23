@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Notify } from 'notiflix';
 
-import { setContactThunk } from 'store/contacts/contactsThunks';
+import { setContactThunk } from 'store/contacts/contactsOperations';
 
 const INITIAL_STATE = {
   name: '',
