@@ -8,13 +8,13 @@ import {
   ContactsListContainer,
   Message,
 } from 'components/ContactsList/ContactsList.styled';
-import { getFilteredContacts, getIsLoading, getError } from 'store';
-// import { getContacts } from 'store';
+import { getIsLoading, getError } from 'store';
+
 import { Loader } from 'components/Loader/Loader';
+import { getFilteredContacts } from 'store/contacts/contactsSelectors';
 
 export const Contacts = () => {
   const contacts = useSelector(getFilteredContacts);
-  // const contacts = useSelector(getContacts);
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
 
