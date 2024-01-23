@@ -9,7 +9,7 @@ import {
   Message,
 } from 'components/ContactsList/ContactsList.styled';
 import { getFilteredContacts, getIsLoading, getError } from 'store';
-import { getContacts } from 'store';
+// import { getContacts } from 'store';
 import { Loader } from 'components/Loader/Loader';
 
 export const Contacts = () => {

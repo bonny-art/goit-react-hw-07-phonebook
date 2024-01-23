@@ -5,7 +5,6 @@ import {
 } from '@reduxjs/toolkit';
 
 import * as contactsAPI from '../../services';
-import { getFilter } from 'store/filter/filterSlice';
 
 const hendlePending = state => {
   state.contacts.isLoading = true;
