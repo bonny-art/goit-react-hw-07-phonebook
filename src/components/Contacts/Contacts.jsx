@@ -1,36 +1,38 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ContactsList } from 'components';
+import { fetchContactsAction } from 'store';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { contactsOperations } from 'store/contacts';
-import { ContactsListContainer } from 'components/ContactsList/ContactsList.styled';
+import {
+  ContactsListContainer,
+  Message,
+} from 'components/ContactsList/ContactsList.styled';
+import { getFilteredContacts, getIsLoading, getError } from 'store';
+import { getContacts } from 'store';
+import { Loader } from 'components/Loader/Loader';
 
 export const Contacts = () => {
-  const filter = useSelector(state => state.filter.filter);
-  const { items, isLoading, error } = useSelector(
-    state => state.contacts.contacts
-  );
-
-  //   console.log('items :>> ', items);
-  //   console.log('isLoading :>> ', isLoading);
-  //   console.log('error :>> ', error);
+  const contacts = useSelector(getFilteredContacts);
+  // const contacts = useSelector(getContacts);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(contactsOperations.getContactsThunk());
+    dispatch(fetchContactsAction());
   }, [dispatch]);
 
-  const visibleContacts = items
-    .filter(contact => contact.name.toLowerCase().includes(filter))
-    .toSorted((a, b) => a.name.localeCompare(b.name));
+  const sortedContacts = contacts.toSorted((a, b) =>
+    a.name.localeCompare(b.name)
+  );
 
   return (
     <ContactsListContainer>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {items && <ContactsList contacts={visibleContacts} />}
+      {isLoading && <Loader />}
+      {error && <Message>{error}</Message>}
+      {contacts && <ContactsList contacts={sortedContacts} />}
     </ContactsListContainer>
   );
 };

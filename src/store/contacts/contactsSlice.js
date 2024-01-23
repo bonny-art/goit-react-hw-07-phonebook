@@ -1,6 +1,11 @@
-import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit';
+import {
+  asyncThunkCreator,
+  buildCreateSlice,
+  createSelector,
+} from '@reduxjs/toolkit';
 
 import * as contactsAPI from '../../services';
+import { getFilter } from 'store/filter/filterSlice';
 
 const hendlePending = state => {
   state.contacts.isLoading = true;
@@ -11,6 +16,12 @@ const hendleRejected = (state, { payload }) => {
   state.contacts.isLoading = false;
   state.contacts.error = payload;
 };
+
+const hendleFilter = state => state.filter;
+
+const hendleContacts = state => state.contacts.items;
+const hendleIsLoading = state => state.contacts.isLoading;
+const hendleError = state => state.contacts.error;
 
 const initialState = {
   contacts: {
@@ -28,7 +39,7 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: creator => ({
-    getContactsAction: creator.asyncThunk(
+    fetchContactsAction: creator.asyncThunk(
       async (_, { rejectWithValue }) => {
         try {
           return await contactsAPI.getContacts();
@@ -84,8 +95,27 @@ const contactsSlice = createSlice({
       }
     ),
   }),
+  selectors: {
+    getContacts: hendleContacts,
+
+    getIsLoading: hendleIsLoading,
+
+    getError: hendleError,
+
+    getFilteredContacts: createSelector(
+      [hendleFilter, hendleContacts],
+      (filter, contacts) => {
+        console.log('🚀 ~ filter:', filter);
+        return contacts.filter(contact =>
+          contact.name.toLowerCase().includes(filter.toLowerCase())
+        );
+      }
+    ),
+  },
 });
 
 export const contactsReducer = contactsSlice.reducer;
-export const { getContactsAction, addContactAction, deleteContactAction } =
+export const { fetchContactsAction, addContactAction, deleteContactAction } =
   contactsSlice.actions;
+export const { getContacts, getIsLoading, getError, getFilteredContacts } =
+  contactsSlice.selectors;

@@ -1,16 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import { MdDeleteForever } from 'react-icons/md';
 
-import { Contact, Name, Number, DeleteButton } from './ContactsListItem.styled';
+import { deleteContactAction } from 'store';
 
-import { useDispatch } from 'react-redux';
-import { deleteContactThunk } from 'store/contacts/contactsOperations';
+import { Contact, Name, Number, DeleteButton } from './ContactsListItem.styled';
 
 export const ContactsListItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
 
   const deleteContact = contactId => {
-    dispatch(deleteContactThunk(contactId));
+    dispatch(deleteContactAction(contactId));
   };
 
   return (

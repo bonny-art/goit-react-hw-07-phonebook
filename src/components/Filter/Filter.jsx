@@ -1,16 +1,17 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { changeFilterAction, getFilter } from 'store';
 
 import { FilterSection, FormField, FormInput } from './Filter.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeFilterAction } from 'store';
 
 export const Filter = () => {
-  const filter = useSelector(state => state.filter.filter);
+  const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
 
   const changeFilter = e => {
-    dispatch(changeFilterAction(e.target.value.toLowerCase()));
+    dispatch(changeFilterAction(e.target.value));
   };
 
   return (

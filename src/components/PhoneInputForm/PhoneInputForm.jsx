@@ -1,6 +1,11 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { Notify } from 'notiflix';
+
+import { addContactAction, getContacts } from 'store';
 
 import {
   InputFormContainer,
@@ -9,11 +14,6 @@ import {
   FormButton,
   ErrorMessageStyled,
 } from './PhoneInputForm.styled';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { Notify } from 'notiflix';
-
-import { setContactThunk } from 'store/contacts/contactsOperations';
 
 const INITIAL_STATE = {
   name: '',
@@ -37,7 +37,7 @@ const schema = yup.object().shape({
 });
 
 export const PhoneInputForm = () => {
-  const contacts = useSelector(state => state.contacts.contacts.items);
+  const contacts = useSelector(getContacts);
 
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ export const PhoneInputForm = () => {
       return;
     }
 
-    dispatch(setContactThunk(data));
+    dispatch(addContactAction(data));
   };
 
   const handleSubmit = (values, { resetForm }) => {

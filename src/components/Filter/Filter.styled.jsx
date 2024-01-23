@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
 export const FilterSection = styled.section`
+  position: relative;
+
   background-color: ${props => props.theme.colors.black};
   border-radius: ${props => props.theme.spacing(1.5)};
 
