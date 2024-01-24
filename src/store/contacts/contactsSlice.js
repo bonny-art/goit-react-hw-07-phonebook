@@ -2,19 +2,19 @@ import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit';
 
 import * as contactsAPI from '../../services';
 
-const hendlePending = state => {
+const handlePending = state => {
   state.contacts.isLoading = true;
   state.contacts.error = '';
 };
 
-const hendleRejected = (state, { payload }) => {
+const handleRejected = (state, { payload }) => {
   state.contacts.isLoading = false;
   state.contacts.error = payload;
 };
 
-const hendleContacts = state => state.contacts.items;
-const hendleIsLoading = state => state.contacts.isLoading;
-const hendleError = state => state.contacts.error;
+const handleContacts = state => state.contacts.items;
+const handleIsLoading = state => state.contacts.isLoading;
+const handleError = state => state.contacts.error;
 
 const initialState = {
   contacts: {
@@ -41,12 +41,12 @@ const contactsSlice = createSlice({
         }
       },
       {
-        pending: hendlePending,
+        pending: handlePending,
         fulfilled: (state, { payload }) => {
           state.contacts.isLoading = false;
           state.contacts.items = payload;
         },
-        rejected: hendleRejected,
+        rejected: handleRejected,
       }
     ),
 
@@ -59,12 +59,12 @@ const contactsSlice = createSlice({
         }
       },
       {
-        pending: hendlePending,
+        pending: handlePending,
         fulfilled: (state, { payload }) => {
           state.contacts.isLoading = false;
           state.contacts.items.push(payload);
         },
-        rejected: hendleRejected,
+        rejected: handleRejected,
       }
     ),
 
@@ -77,21 +77,21 @@ const contactsSlice = createSlice({
         }
       },
       {
-        pending: hendlePending,
+        pending: handlePending,
         fulfilled: (state, { payload }) => {
           state.contacts.isLoading = false;
           state.contacts.items = state.contacts.items.filter(
             c => c.id !== payload.id
           );
         },
-        rejected: hendleRejected,
+        rejected: handleRejected,
       }
     ),
   }),
   selectors: {
-    getContacts: hendleContacts,
-    getIsLoading: hendleIsLoading,
-    getError: hendleError,
+    getContacts: handleContacts,
+    getIsLoading: handleIsLoading,
+    getError: handleError,
   },
 });
 

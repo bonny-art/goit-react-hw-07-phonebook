@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const hendleFilter = state => state.filter;
+const handleFilter = state => state.filter;
 
 const initialState = {
   filter: '',
@@ -15,7 +15,7 @@ const filterSlice = createSlice({
     },
   },
   selectors: {
-    getFilter: hendleFilter,
+    getFilter: handleFilter,
   },
 });
 
